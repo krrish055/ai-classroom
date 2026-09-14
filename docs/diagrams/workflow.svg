@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 820" role="img" aria-labelledby="title desc">
+  <title id="title">Tutor Present workflow</title>
+  <desc id="desc">
+    From Present click through per-line notes, TTS, Simli lip-sync, and blackboard animation.
+    Speech always equals the teacher script.
+  </desc>
+  <style>
+    .bg { fill: #f6f1e8; }
+    .title { font: 700 22px "Segoe UI", system-ui, sans-serif; fill: #163a4a; }
+    .small { font: 400 12px "Segoe UI", system-ui, sans-serif; fill: #6b645c; }
+    .h { font: 650 14px "Segoe UI", system-ui, sans-serif; fill: #163a4a; }
+    .p { font: 400 12px "Segoe UI", system-ui, sans-serif; fill: #5c564e; }
+    .num { font: 700 13px "Segoe UI", system-ui, sans-serif; fill: #fff8f1; }
+    .cap { font: 400 11px "Segoe UI", system-ui, sans-serif; fill: #6b645c; }
+    .step { fill: #fffdf8; stroke: #163a4a; stroke-width: 1.5; }
+    .act { fill: #fff8f1; stroke: #c45c26; stroke-width: 1.75; }
+    .api { fill: #e7f0f3; stroke: #163a4a; stroke-width: 1.5; }
+    .loop { fill: #f3ebe0; stroke: #8a6a32; stroke-width: 1.5; }
+    .done { fill: #e7f3ea; stroke: #2f6f4e; stroke-width: 1.5; }
+    .line { stroke: #163a4a; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .ncirc { fill: #c45c26; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#163a4a"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1080" height="820"/>
+  <text class="title" x="40" y="42">Present workflow</text>
+  <text class="small" x="40" y="62">What happens after the teacher clicks Present. One spoken line = one board beat.</text>
+
+  <rect class="act" x="40" y="88" rx="10" width="300" height="86"/>
+  <circle class="ncirc" cx="64" cy="112" r="12"/>
+  <text class="num" x="64" y="116" text-anchor="middle">1</text>
+  <text class="h" x="86" y="116">Paste script</text>
+  <text class="p" x="56" y="140">Paragraph or lines in the classroom.</text>
+  <text class="p" x="56" y="158">Every word will be spoken as written.</text>
+
+  <path class="line" d="M340 131 L390 131"/>
+
+  <rect class="act" x="390" y="88" rx="10" width="300" height="86"/>
+  <circle class="ncirc" cx="414" cy="112" r="12"/>
+  <text class="num" x="414" y="116" text-anchor="middle">2</text>
+  <text class="h" x="436" y="116">Present</text>
+  <text class="p" x="406" y="140">If Simli is on: POST /api/avatar/session</text>
+  <text class="p" x="406" y="158">API key stays on the server.</text>
+
+  <path class="line" d="M690 131 L740 131"/>
+
+  <rect class="api" x="740" y="88" rx="10" width="300" height="86"/>
+  <circle class="ncirc" cx="764" cy="112" r="12"/>
+  <text class="num" x="764" y="116" text-anchor="middle">3</text>
+  <text class="h" x="786" y="116">Plan notes</text>
+  <text class="p" x="756" y="140">POST /api/lesson { script }</text>
+  <text class="p" x="756" y="158">One Groq notes call per line.</text>
+
+  <path class="line" d="M890 174 L890 214"/>
+
+  <rect class="step" x="40" y="214" rx="10" width="1000" height="70"/>
+  <circle class="ncirc" cx="64" cy="238" r="12"/>
+  <text class="num" x="64" y="242" text-anchor="middle">4</text>
+  <text class="h" x="86" y="242">Normalize - speech is the original line</text>
+  <text class="p" x="86" y="264">The LLM may invent spoken text in JSON. The backend always overwrites it. Board notes teach the topic, not a transcript dump.</text>
+
+  <path class="line" d="M540 284 L540 318"/>
+
+  <rect class="loop" x="40" y="318" rx="12" width="1000" height="336"/>
+  <text class="h" x="64" y="348">5  For each spoken line (in order)</text>
+  <text class="p" x="64" y="368">Board mode = replace: this line fills the blackboard. The previous line drawing is replaced.</text>
+
+  <rect class="step" x="64" y="388" rx="8" width="290" height="92"/>
+  <text class="h" x="80" y="416">5a  TTS</text>
+  <text class="p" x="80" y="438">POST /api/tts { text: line }</text>
+  <text class="p" x="80" y="456">Edge returns MP3 (or browser TTS).</text>
+
+  <path class="line" d="M354 434 L394 434"/>
+
+  <rect class="step" x="394" y="388" rx="8" width="300" height="92"/>
+  <text class="h" x="410" y="416">5b  Avatar (optional)</text>
+  <text class="p" x="410" y="438">Decode MP3 to PCM16 16 kHz</text>
+  <text class="p" x="410" y="456">sendAudioData to Simli WebRTC.</text>
+
+  <path class="line" d="M694 434 L734 434"/>
+
+  <rect class="step" x="734" y="388" rx="8" width="282" height="92"/>
+  <text class="h" x="750" y="416">5c  Blackboard</text>
+  <text class="p" x="750" y="438">Draw about half the notes immediately.</text>
+  <text class="p" x="750" y="456">Rest animate while the line plays.</text>
+
+  <path class="line" d="M540 480 L540 508"/>
+
+  <rect class="api" x="300" y="508" rx="8" width="480" height="72"/>
+  <text class="h" x="540" y="536" text-anchor="middle">Wait until this line audio finishes</text>
+  <text class="p" x="540" y="558" text-anchor="middle">Then go to the next line. Stop cancels the remaining loop.</text>
+
+  <path class="line" d="M540 580 L540 610"/>
+  <path class="line" d="M780 554 L930 554 L930 360 L900 360"/>
+  <text class="cap" x="790" y="348">next line</text>
+
+  <rect class="done" x="300" y="670" rx="10" width="480" height="86"/>
+  <circle class="ncirc" cx="324" cy="694" r="12"/>
+  <text class="num" x="324" y="698" text-anchor="middle">6</text>
+  <text class="h" x="346" y="698">Done</text>
+  <text class="p" x="346" y="722">Last line notes stay on the board.</text>
+  <text class="p" x="346" y="740">If Groq failed, local diagrams were used; speech was still the script.</text>
+
+  <text class="small" x="40" y="796">Failure path: Groq down = local notes. Simli off = play Edge audio in the browser. TTS fail = browser speechSynthesis.</text>
+</svg>

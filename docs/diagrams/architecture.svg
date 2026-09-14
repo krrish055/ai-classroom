@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 680" role="img" aria-labelledby="title desc">
+  <title id="title">Tutor architecture</title>
+  <desc id="desc">
+    Teacher uses the Vite React classroom. The FastAPI backend plans notes, synthesizes speech,
+    and mints Simli tokens. Groq, Edge TTS, and Simli stay outside the app. API keys never reach the browser.
+  </desc>
+  <style>
+    .bg { fill: #f6f1e8; }
+    .user { fill: #fff8f1; stroke: #c45c26; stroke-width: 2; }
+    .fe { fill: #e7f0f3; stroke: #163a4a; stroke-width: 1.75; }
+    .be { fill: #163a4a; }
+    .ext { fill: #f3ebe0; stroke: #8a7a68; stroke-width: 1.5; }
+    .title { font: 700 22px "Segoe UI", system-ui, sans-serif; fill: #163a4a; }
+    .h { font: 650 15px "Segoe UI", system-ui, sans-serif; fill: #163a4a; }
+    .h-inv { font: 650 15px "Segoe UI", system-ui, sans-serif; fill: #f6f1e8; }
+    .p { font: 400 12px "Segoe UI", system-ui, sans-serif; fill: #5c564e; }
+    .p-inv { font: 400 12px "Segoe UI", system-ui, sans-serif; fill: #d7eee8; }
+    .small { font: 400 11px "Segoe UI", system-ui, sans-serif; fill: #6b645c; }
+    .arrow { stroke: #163a4a; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .muted { stroke: #8a7a68; stroke-width: 1.25; fill: none; marker-end: url(#arrow-muted); }
+    .cap { font: 400 11px "Segoe UI", system-ui, sans-serif; fill: #6b645c; }
+    .legend { fill: #fffdf8; stroke: #e6ddd0; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#163a4a"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a7a68"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1080" height="680"/>
+  <text class="title" x="40" y="42">Tutor architecture</text>
+  <text class="small" x="40" y="62">Modular FastAPI monolith + Vite classroom. Speech is never LLM-authored.</text>
+
+  <rect class="user" x="430" y="86" rx="8" width="220" height="64"/>
+  <text class="h" x="540" y="114" text-anchor="middle">Teacher / learner</text>
+  <text class="p" x="540" y="134" text-anchor="middle">script, Present, optional mic</text>
+
+  <path class="arrow" d="M540 150 L540 178"/>
+  <text class="cap" x="552" y="170">HTTP from browser</text>
+
+  <rect class="fe" x="250" y="182" rx="10" width="580" height="92"/>
+  <text class="h" x="540" y="216" text-anchor="middle">Frontend - Vite React :5173</text>
+  <text class="p" x="540" y="238" text-anchor="middle">Landing + Classroom | Excalidraw blackboard | Simli video stage</text>
+  <text class="p" x="540" y="256" text-anchor="middle">useTeacherSession | boardRenderer | useSimliAvatar (PCM 16 kHz)</text>
+
+  <path class="arrow" d="M540 274 L540 306"/>
+  <text class="cap" x="552" y="298">JSON / MP3 / multipart | no API keys</text>
+
+  <rect class="be" x="250" y="308" rx="10" width="580" height="100"/>
+  <text class="h-inv" x="540" y="342" text-anchor="middle">Backend - FastAPI :8787</text>
+  <text class="p-inv" x="540" y="364" text-anchor="middle">POST /api/lesson | /api/tts | /api/stt | /api/avatar/session</text>
+  <text class="p-inv" x="540" y="384" text-anchor="middle">plan_lesson + normalize (speech = original line) | .env secrets stay here</text>
+
+  <path class="arrow" d="M340 408 L136 454"/>
+  <path class="arrow" d="M440 408 L344 454"/>
+  <path class="arrow" d="M540 408 L552 454"/>
+  <path class="arrow" d="M640 408 L760 454"/>
+  <path class="muted" d="M740 408 L956 454"/>
+
+  <rect class="ext" x="40" y="456" rx="8" width="192" height="88"/>
+  <text class="h" x="136" y="486" text-anchor="middle">Groq LLM</text>
+  <text class="p" x="136" y="506" text-anchor="middle">notes JSON only</text>
+  <text class="p" x="136" y="524" text-anchor="middle">one call per line</text>
+
+  <rect class="ext" x="248" y="456" rx="8" width="192" height="88"/>
+  <text class="h" x="344" y="486" text-anchor="middle">Local notes</text>
+  <text class="p" x="344" y="506" text-anchor="middle">heuristic diagrams</text>
+  <text class="p" x="344" y="524" text-anchor="middle">Groq fallback</text>
+
+  <rect class="ext" x="456" y="456" rx="8" width="192" height="88"/>
+  <text class="h" x="552" y="486" text-anchor="middle">Edge TTS</text>
+  <text class="p" x="552" y="506" text-anchor="middle">verbatim line to MP3</text>
+  <text class="p" x="552" y="524" text-anchor="middle">en-IN neural voice</text>
+
+  <rect class="ext" x="664" y="456" rx="8" width="192" height="88"/>
+  <text class="h" x="760" y="486" text-anchor="middle">Groq STT</text>
+  <text class="p" x="760" y="506" text-anchor="middle">optional mic</text>
+  <text class="p" x="760" y="524" text-anchor="middle">Whisper</text>
+
+  <rect class="ext" x="872" y="456" rx="8" width="168" height="88"/>
+  <text class="h" x="956" y="486" text-anchor="middle">Simli</text>
+  <text class="p" x="956" y="506" text-anchor="middle">session token</text>
+  <text class="p" x="956" y="524" text-anchor="middle">+ WebRTC PCM</text>
+
+  <path class="muted" d="M956 456 L956 274 L830 274"/>
+  <text class="cap" x="838" y="266">browser WebRTC (token only)</text>
+
+  <rect class="legend" x="40" y="568" rx="6" width="1000" height="84"/>
+  <text class="h" x="56" y="592">Boundary</text>
+  <text class="p" x="56" y="612">Orange = user. Blue-grey = Tutor UI. Dark teal = Tutor API (owns keys). Tan = replaceable providers via .env.</text>
+  <text class="p" x="56" y="632">Invariant: LLM never writes spoken text. normalize_lesson overwrites any model speech with the original script line.</text>
+</svg>
