@@ -1,0 +1,15 @@
+{
+  "name": "tutor",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "python -m uvicorn app.main:app --reload --reload-dir backend --reload-include ../.env --app-dir backend --host 127.0.0.1 --port 8787",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "verify": "python backend/scripts/verify_lesson.py",
+    "test": "python -m pytest"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

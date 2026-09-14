@@ -1,0 +1,19 @@
+name: Bug report
+description: Something in Tutor is broken
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: Do not paste API keys, `.env`, or student audio.
